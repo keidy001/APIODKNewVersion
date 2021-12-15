@@ -7,8 +7,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Log {
@@ -25,18 +23,23 @@ public class Log {
 
     private String action;
 
+    private String typeActeur;
+    private String nomComplet;
+
     private LocalDate date = LocalDate.now();
     private  LocalTime heure = LocalTime.now();
 
     public Log() {
     }
 
-    public Log(Utilisateur utilisateur, Administrateur administrateur, String action, LocalDate date, LocalTime heure) {
+    public Log(Utilisateur utilisateur, Administrateur administrateur, String action, String typeActeur, String nomComplet, LocalDate date, LocalTime heure) {
         this.utilisateur = utilisateur;
         this.administrateur = administrateur;
         this.action = action;
         this.date = date;
         this.heure = heure;
+        this.typeActeur = typeActeur;
+        this.nomComplet = nomComplet;
     }
 
     public Long getId() {
@@ -69,6 +72,22 @@ public class Log {
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    public String getNomComplet() {
+        return nomComplet;
+    }
+
+    public void setNomComplet(String nomComplet) {
+        this.nomComplet = nomComplet;
+    }
+
+    public String getTypeActeur() {
+        return typeActeur;
+    }
+
+    public void setTypeActeur(String typeActeur) {
+        this.typeActeur = typeActeur;
     }
 
     public LocalDate getDate() {

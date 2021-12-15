@@ -54,18 +54,22 @@ public class LogServiceImp implements LogService{
         return logRepository.getLogByDateGreaterThanEqualAndDateLessThanEqual(min, max);
     }
 
-    public void addLog(Utilisateur user, String action)
+    public void addLog(Utilisateur user, String typeActeur, String nomComplet, String action)
     {
         Log log = new Log();
         log.setUtilisateur(user);
+        log.setTypeActeur(typeActeur);
+        log.setNomComplet(nomComplet);
         log.setAction(action);
         logRepository.save(log);
     }
 
-    public void addLogAdmin(Administrateur administrateur, String action)
+    public void addLogAdmin(Administrateur administrateur, String typeActeur, String nomComplet, String action)
     {
         Log log = new Log();
         log.setAdministrateur(administrateur);
+        log.setTypeActeur(typeActeur);
+        log.setNomComplet(nomComplet);
         log.setAction(action);
         logRepository.save(log);
     }

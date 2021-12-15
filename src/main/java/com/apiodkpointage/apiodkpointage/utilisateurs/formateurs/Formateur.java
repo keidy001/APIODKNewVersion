@@ -1,7 +1,6 @@
 package com.apiodkpointage.apiodkpointage.utilisateurs.formateurs;
 
 import com.apiodkpointage.apiodkpointage.Etat;
-import com.apiodkpointage.apiodkpointage.utilisateurs.Type;
 import com.apiodkpointage.apiodkpointage.utilisateurs.Utilisateur;
 
 import javax.persistence.*;

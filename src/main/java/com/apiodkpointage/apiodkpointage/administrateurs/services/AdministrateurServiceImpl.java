@@ -45,7 +45,7 @@ public class AdministrateurServiceImpl implements AdministrateurService{
         }
 
         administrateurRepository.save(administrateur);
-        logServiceImp.addLogAdmin(superAdmin, superAdmin.getPrenom()+ " "+superAdmin.getNom()+ " a ajouté l'administrateur "+ administrateur.getPrenom()+ " "+administrateur.getNom());
+        logServiceImp.addLogAdmin(superAdmin, "SUPERADMIN", superAdmin.getPrenom()+" "+superAdmin.getNom(), "a ajouté l'administrateur "+ administrateur.getPrenom()+ " "+administrateur.getNom());
 
         return "Admin "+administrateur.getPrenom()+" "+administrateur.getNom()+" ajouté avec succès";
     }
@@ -64,7 +64,7 @@ public class AdministrateurServiceImpl implements AdministrateurService{
 
         administrateur.setSupprimer(true);
         administrateur.setEtat(Etat.DESACTIVER);
-        logServiceImp.addLogAdmin(superAdmin, "Suppression de l'Admin "+administrateur.getPrenom()+" "+administrateur.getNom()+" par "+superAdmin.getPrenom()+" "+superAdmin.getNom());
+        logServiceImp.addLogAdmin(superAdmin, "SUPERADMIN", superAdmin.getPrenom()+" "+superAdmin.getNom(), "Suppression de l'Administrateur "+administrateur.getPrenom()+" "+administrateur.getNom());
 
         return "Vous avez supprimez un administrateur "+administrateur.getPrenom()+" "+administrateur.getNom();
     }
@@ -75,7 +75,7 @@ public class AdministrateurServiceImpl implements AdministrateurService{
 
         administrateur.setSupprimer(false);
         administrateur.setEtat(Etat.ACTIVER);
-        logServiceImp.addLogAdmin(superAdmin, "Restauration de l'admin" + administrateur.getPrenom() + " " + administrateur.getNom() + "par" +superAdmin.getPrenom() + " " + superAdmin.getNom());
+        logServiceImp.addLogAdmin(superAdmin, "SUPERADMIN", superAdmin.getPrenom()+" "+superAdmin.getNom(), "Restauration de l'administrateur "+ administrateur.getPrenom()+" "+administrateur.getNom());
         return "Vous avez supprimé l'admin " + administrateur.getPrenom() + " " + administrateur.getNom();
     }
 
@@ -95,7 +95,7 @@ public class AdministrateurServiceImpl implements AdministrateurService{
         adminExistant.setDateModification();
         adminExistant.setEtat(administrateur.getEtat());
 
-        logServiceImp.addLogAdmin(superAdmin, superAdmin.getPrenom()+ " " +superAdmin.getNom()+ " a modifié l'Administrateur "+ administrateur.getPrenom()+ " "+administrateur.getNom());
+        logServiceImp.addLogAdmin(superAdmin, "SUPERADMIN", superAdmin.getPrenom()+" "+superAdmin.getNom(), "a modifié l'Administrateur "+ administrateur.getPrenom()+ " "+administrateur.getNom());
         return administrateurRepository.save(adminExistant);
     }
 
@@ -109,7 +109,7 @@ public class AdministrateurServiceImpl implements AdministrateurService{
     public String modifierPassword(Long id, String nouveauPassword) {
         Administrateur administrateurExistant = administrateurRepository.findById(id).get();
         administrateurExistant.setMotDePass(nouveauPassword);
-        logServiceImp.addLogAdmin(administrateurExistant, administrateurExistant.getPrenom()+ " " +administrateurExistant.getNom()+ " a modifié son mot de passe");
+        logServiceImp.addLogAdmin(administrateurExistant, "ADMIN", administrateurExistant.getPrenom()+" "+administrateurExistant.getNom(), "a modifié son mot de passe");
         return "Mot de passe modifié avec succès !";
     }
 
@@ -127,7 +127,7 @@ public class AdministrateurServiceImpl implements AdministrateurService{
             throw new IllegalStateException("Votre compte administrateur est désactivé !");
         }
 
-        logServiceImp.addLogAdmin(optionalAdministrateur.get(), optionalAdministrateur.get().getPrenom()+" "+optionalAdministrateur.get().getNom()+" s'est connecté");
+        logServiceImp.addLogAdmin(optionalAdministrateur.get(), "ADMIN", optionalAdministrateur.get().getPrenom()+" "+optionalAdministrateur.get().getNom(), "s'est connecté");
         return optionalAdministrateur.get();
     }
 
@@ -137,7 +137,7 @@ public class AdministrateurServiceImpl implements AdministrateurService{
         Administrateur superAdmin= administrateurRepository.findById(idSuperAdmin).get();
         Administrateur administrateurExistant = administrateurRepository.findById(id).get();
         administrateurExistant.setProfile(profile);
-        logServiceImp.addLogAdmin(superAdmin,  superAdmin.getPrenom()+ " "+superAdmin.getNom()+ " a modifié le profile de l'administrateur "+administrateurExistant.getPrenom()+" "+administrateurExistant.getNom());
+        logServiceImp.addLogAdmin(superAdmin, "SUPERADMIN", superAdmin.getPrenom()+" "+superAdmin.getNom(), "a modifié le profile de l'administrateur "+administrateurExistant.getPrenom()+" "+administrateurExistant.getNom());
 
         return "Mise en jour du profile effectué avec succès !";
     }
@@ -156,7 +156,7 @@ public class AdministrateurServiceImpl implements AdministrateurService{
     public String addProfile(Profile profile, Long idSuperAdmin) {
         Administrateur superAdmin = administrateurRepository.findById(idSuperAdmin).get();
         profileRepository.save(profile);
-        logServiceImp.addLogAdmin(superAdmin, "Le profile "+profile.getLibelle()+" a été ajouté par le SUPERADMIN "+ superAdmin.getPrenom()+ " "+superAdmin.getNom());
+        logServiceImp.addLogAdmin(superAdmin, "SUPERADMIN", superAdmin.getPrenom()+" "+superAdmin.getNom(), "a ajouté le profile "+profile.getLibelle());
         return "Profile "+profile.getLibelle()+" profile ajouté avec succès !";
     }
 
@@ -165,7 +165,7 @@ public class AdministrateurServiceImpl implements AdministrateurService{
         Administrateur superAdmin= administrateurRepository.findById(idSuperAdmin).get();
         Profile profile= profileRepository.findById(id).get();
         profileRepository.deleteById(id);
-        logServiceImp.addLogAdmin(superAdmin,  "Le profile "+profile.getLibelle()+ " a été supprimé par "+superAdmin.getPrenom()+ " "+superAdmin.getNom());
+        logServiceImp.addLogAdmin(superAdmin, "SUPERADMIN", superAdmin.getPrenom()+" "+superAdmin.getNom(), "a supprimé le profile "+profile.getLibelle());
         return "Le profile "+profile.getLibelle()+ " supprimé avec succès !";
     }
 }

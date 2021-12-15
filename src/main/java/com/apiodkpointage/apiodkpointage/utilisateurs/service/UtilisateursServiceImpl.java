@@ -52,7 +52,7 @@ public class UtilisateursServiceImpl implements UtilisateursServices{
         }
 
         utilisateursRepository.save(utilisateur);
-        logServiceImp.addLogAdmin(administrateur, administrateur.getPrenom()+ " "+administrateur.getNom()+ " a ajouté l'utilisateur "+ utilisateur.getPrenom()+" "+ utilisateur.getNom());
+        logServiceImp.addLogAdmin(administrateur, "ADMIN", administrateur.getPrenom()+" "+administrateur.getNom(), "a ajouté l'utilisateur "+ utilisateur.getPrenom()+" "+ utilisateur.getNom());
 
         return "Utilisateur "+utilisateur.getPrenom()+" "+utilisateur.getNom()+" ajouté avec succès";
     }
@@ -70,7 +70,7 @@ public class UtilisateursServiceImpl implements UtilisateursServices{
        modifier.setMotDePass(utilisateur.getMotDePass());
        modifier.setTelephone(utilisateur.getTelephone());
        modifier.setDateModification();
-       logServiceImp.addLogAdmin(administrateur, administrateur.getPrenom()+ " "+administrateur.getNom()+ " a modifié l'utilisateur "+ utilisateur.getPrenom()+" "+ utilisateur.getNom());
+       logServiceImp.addLogAdmin(administrateur, "ADMIN", administrateur.getPrenom()+" "+administrateur.getNom(), "a modifié l'utilisateur "+ utilisateur.getPrenom()+" "+ utilisateur.getNom());
 
         return utilisateursRepository.save(modifier);
     }
@@ -79,10 +79,9 @@ public class UtilisateursServiceImpl implements UtilisateursServices{
     public void supprimer_utilisateur(Long id, Long idAdmin) {
         Administrateur administrateur= administrateurRepository.findById(idAdmin).get();
         Utilisateur utilisateur=utilisateursRepository.findById(id).get();
-        //utilisateursRepository.deleteById(id);
         utilisateur.setSupprimer(true);
         utilisateur.setEtat(Etat.DESACTIVER);
-        logServiceImp.addLogAdmin(administrateur, "Suppression de l'utilisateur "+utilisateur.getNom()+ " "+utilisateur.getPrenom() +" par administrateur  "+ administrateur.getNom()+ " "+ administrateur.getPrenom() );
+        logServiceImp.addLogAdmin(administrateur, "ADMIN", administrateur.getPrenom()+" "+administrateur.getNom(), "a supprimé l'utilisateur "+utilisateur.getNom()+" "+utilisateur.getPrenom());
     }
     @Override
     public void restoreUtilisateur(Long id, Long idAdmin) {
@@ -90,7 +89,7 @@ public class UtilisateursServiceImpl implements UtilisateursServices{
         Utilisateur utilisateur=utilisateursRepository.findById(id).get();
         utilisateur.setSupprimer(false);
         utilisateur.setEtat(Etat.ACTIVER);
-        logServiceImp.addLogAdmin(administrateur, "Restauration de l'utilisateur "+utilisateur.getNom()+ " "+utilisateur.getPrenom() +" par Admin  "+ administrateur.getNom()+ " "+ administrateur.getPrenom() );
+        logServiceImp.addLogAdmin(administrateur, "ADMIN", administrateur.getPrenom()+" "+administrateur.getNom(), "a restoré l'utilisateur "+utilisateur.getNom()+" "+utilisateur.getPrenom());
     }
 
     @Override
@@ -107,7 +106,7 @@ public class UtilisateursServiceImpl implements UtilisateursServices{
     public String modifierPassword(Long id, String nouveauPassword) {
         Utilisateur utilisateurExistant = utilisateursRepository.findById(id).get();
         utilisateurExistant.setMotDePass(nouveauPassword);
-        logServiceImp.addLog(utilisateurExistant, utilisateurExistant.getPrenom()+ " "+utilisateurExistant.getNom()+ " a modifié son mot de passe ");
+        logServiceImp.addLog(utilisateurExistant, "UTILISATEUR", utilisateurExistant.getPrenom()+ " "+utilisateurExistant.getNom(), "a modifié son mot de passe ");
 
         return "Mot de passe modifié avec succès !";
     }
@@ -128,7 +127,7 @@ public class UtilisateursServiceImpl implements UtilisateursServices{
         Pointage pointage = new Pointage();
         pointage.setUtilisateur(connexion.get());
         pointageServiceImpl.ajoutPointage(pointage);
-        logServiceImp.addLog(connexion.get(), "Connexion de l'utilisateur "+connexion.get().getPrenom()+" "+connexion.get().getNom());
+        logServiceImp.addLog(connexion.get(), "UTILISATEUR", connexion.get().getPrenom()+ " "+connexion.get().getNom(), "s'est connecté.");
         return connexion.get();
     }
 
@@ -136,6 +135,4 @@ public class UtilisateursServiceImpl implements UtilisateursServices{
     public Utilisateur findByUtilisateurAndLogin(String login) {
         return utilisateursRepository.findUtilisateurByLogin(login);
     }
-
-
 }

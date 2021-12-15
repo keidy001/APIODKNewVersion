@@ -2,10 +2,8 @@ package com.apiodkpointage.apiodkpointage.utilisateurs.apprenants;
 
 import com.apiodkpointage.apiodkpointage.Etat;
 import com.apiodkpointage.apiodkpointage.promotions.Promotion;
-import com.apiodkpointage.apiodkpointage.utilisateurs.Type;
 import com.apiodkpointage.apiodkpointage.utilisateurs.Utilisateur;
 import com.apiodkpointage.apiodkpointage.utilisateurs.groupe.Groupe;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
